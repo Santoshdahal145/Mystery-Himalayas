@@ -20,7 +20,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@configs/*": ["src/configs/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@contextProviders/*": ["./src/contextProviders/*"],
+      "@apis/*": ["./src/apis/*"]
     }
   },
   "include": [
