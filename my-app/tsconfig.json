@@ -26,7 +26,8 @@
       "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"],
       "@contextProviders/*": ["./src/contextProviders/*"],
-      "@apis/*": ["./src/apis/*"]
+      "@apis/*": ["./src/apis/*"],
+      "@layouts/*": ["./src/layouts/*"]
     }
   },
   "include": [
