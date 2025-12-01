@@ -1,19 +1,13 @@
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AdminLayout } from "@layouts/index";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ReactNode } from "react";
 
 export default function layout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
-      <div className="flex flex-row ">
+      <div className="flex flex-row flex-1">
         <AdminLayout.Drawer />
-        <div>
-          <AdminLayout.Header />
-          <div>
-            <SidebarTrigger />
-            {children}
-          </div>
-        </div>
+        <div className="flex flex-1 flex-col">{children}</div>
       </div>
     </SidebarProvider>
   );

@@ -27,7 +27,8 @@
       "@utils/*": ["./src/utils/*"],
       "@contextProviders/*": ["./src/contextProviders/*"],
       "@apis/*": ["./src/apis/*"],
-      "@layouts/*": ["./src/layouts/*"]
+      "@layouts/*": ["./src/layouts/*"],
+      "@assets/*": ["./src/assets/*"]
     }
   },
   "include": [
