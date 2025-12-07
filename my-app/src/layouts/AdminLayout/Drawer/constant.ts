@@ -36,7 +36,7 @@ export const CORE_ITEMS: CombinedCollapseMenuType[] = [
     icon: Truck,
     name: "Vehicle Rental",
     isActive: false,
-    url: "/vehicle-rental",
+    url: "/admin/vehicle-rental",
     menuItems: [
       {
         name: "Add Rental",
@@ -46,7 +46,7 @@ export const CORE_ITEMS: CombinedCollapseMenuType[] = [
       {
         name: "Rental Providers",
         icon: Users,
-        url: "/vehicle-rental/providers",
+        url: "/admin/vehicle-rental/rental-providers",
       },
     ],
   },

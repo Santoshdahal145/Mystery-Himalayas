@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateRentalProviderDto } from './dto/create-rental-provider-dto';
+import { UpdateRentalProviderDto } from './dto/update-rental-provider-dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class RentalProviderService {
@@ -31,6 +33,39 @@ export class RentalProviderService {
         phone: dto.phone,
         logo: dto.logo,
         introduction: dto.introduction,
+      },
+    });
+  }
+
+  // -------------------------
+  // UPDATE AGENCY
+  // -------------------------
+  async update(rentalProviderId: number, dto: UpdateRentalProviderDto) {
+    const rentalProvider = await this.prisma.agency.findUnique({
+      where: { id: rentalProviderId },
+      include: { address: true },
+    });
+
+    if (!rentalProvider)
+      throw new NotFoundException('Rental Provider not found');
+
+    let addressData:
+      | Prisma.AddressUpdateOneWithoutAgencyNestedInput
+      | undefined = undefined;
+
+    if (dto.address) {
+      addressData = { update: dto.address };
+    }
+
+    return this.prisma.agency.update({
+      where: { id: rentalProviderId },
+      data: {
+        email: dto.email,
+        name: dto.name,
+        phone: dto.phone,
+        logo: dto.logo,
+        introduction: dto.introduction,
+        address: addressData,
       },
     });
   }

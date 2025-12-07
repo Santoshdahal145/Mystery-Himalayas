@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { CreateAgencyDto } from './dto/create-agency-dto';
+import { Prisma } from '@prisma/client';
+import { UpdateAgencyDto } from './dto/update-agency-dto';
 
 @Injectable()
 export class AgencyService {
@@ -31,6 +33,37 @@ export class AgencyService {
         phone: dto.phone,
         logo: dto.logo,
         introduction: dto.introduction,
+      },
+    });
+  }
+  // -------------------------
+  // UPDATE AGENCY
+  // -------------------------
+  async update(agencyId: number, dto: UpdateAgencyDto) {
+    const agency = await this.prisma.agency.findUnique({
+      where: { id: agencyId },
+      include: { address: true },
+    });
+
+    if (!agency) throw new NotFoundException('Agency not found');
+
+    let addressData:
+      | Prisma.AddressUpdateOneWithoutAgencyNestedInput
+      | undefined = undefined;
+
+    if (dto.address) {
+      addressData = { update: dto.address };
+    }
+
+    return this.prisma.agency.update({
+      where: { id: agencyId },
+      data: {
+        email: dto.email,
+        name: dto.name,
+        phone: dto.phone,
+        logo: dto.logo,
+        introduction: dto.introduction,
+        address: addressData,
       },
     });
   }

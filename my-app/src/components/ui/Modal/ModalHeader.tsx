@@ -18,7 +18,7 @@ type ModalHeaderProps = ModalType1 | ModalType2 | ModalType3;
 export default function ModalHeader(props: ModalHeaderProps) {
   if (props.variant === "only-close-btn") {
     return (
-      <div className="flex justify-end p-2">
+      <div className="flex w-full justify-end">
         <button
           onClick={props.onClose}
           className="p-1 hover:bg-gray-100 rounded-full transition"
@@ -31,7 +31,7 @@ export default function ModalHeader(props: ModalHeaderProps) {
 
   if (props.variant === "with-title") {
     return (
-      <div className="flex items-center justify-between p-3 border-b">
+      <div className="flex w-full items-center justify-between">
         <h2 className="text-lg font-semibold">{props.title}</h2>
 
         <button

@@ -19,6 +19,7 @@ export const Modal: FC<CustomModalProps & PropsWithChildren> = ({
       ariaHideApp={false}
       isOpen={isOpen}
       className={className}
+      bodyOpenClassName={"overflow-hidden"}
       onRequestClose={onClose}
       style={{
         overlay: {

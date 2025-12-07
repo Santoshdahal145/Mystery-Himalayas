@@ -7,7 +7,7 @@ import { DASHBOARD_ITEMS } from "./constant";
 export default function Page() {
   return (
     <div className="p-6 space-y-2">
-      <AdminLayout.Header />
+      <AdminLayout.Header title="Dashboard" />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {DASHBOARD_ITEMS.map((ditem) => {
           return (

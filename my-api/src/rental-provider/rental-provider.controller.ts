@@ -6,9 +6,11 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { RentalProviderService } from './rental-provider.service';
 import { CreateRentalProviderDto } from './dto/create-rental-provider-dto';
+import { UpdateRentalProviderDto } from './dto/update-rental-provider-dto';
 
 @Controller('rental-provider')
 export class RentalProviderController {
@@ -20,6 +22,16 @@ export class RentalProviderController {
   @Post()
   async createRentalProvider(@Body() dto: CreateRentalProviderDto) {
     return this.rentalProviderService.create(dto);
+  }
+  // -------------------------
+  // UPDATE RENTAL PROVIDER
+  // -------------------------
+  @Put(':id')
+  async updateRentalProvider(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateRentalProviderDto,
+  ) {
+    return this.rentalProviderService.update(id, dto);
   }
 
   // -------------------------

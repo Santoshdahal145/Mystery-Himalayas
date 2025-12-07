@@ -122,7 +122,7 @@
 }
 
 .custom-modal {
-  @apply bg-white text-black p-6 rounded-lg shadow-lg flex min-w-[500px] max-h-[90vh];
+  @apply bg-white text-black p-3 rounded-lg shadow-lg flex min-w-[800px] max-h-[90vh];
   position: absolute;
   top: 50%;
   left: 50%;
