@@ -4,16 +4,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { CreateAgencyDto } from './dto/create-agency-dto';
+import { CreateRentalProviderDto } from './dto/create-rental-provider-dto';
 
 @Injectable()
-export class AgencyService {
+export class RentalProviderService {
   constructor(private readonly prisma: PrismaService) {}
   // -------------------------
   // CREATE AGENCY
   // -------------------------
-  async create(dto: CreateAgencyDto) {
-    const exists = await this.prisma.agency.findUnique({
+  async create(dto: CreateRentalProviderDto) {
+    const exists = await this.prisma.rentalProvider.findUnique({
       where: { email: dto.email },
     });
 
@@ -21,7 +21,7 @@ export class AgencyService {
       throw new ConflictException('Email already registered.');
     }
 
-    return this.prisma.agency.create({
+    return this.prisma.rentalProvider.create({
       data: {
         email: dto.email,
         name: dto.name,
@@ -40,37 +40,38 @@ export class AgencyService {
   // -------------------------
 
   async getAll() {
-    return await this.prisma.agency.findMany();
+    return await this.prisma.rentalProvider.findMany();
   }
 
   // -------------------------
   // GET AGENCY BY ID
   // -------------------------
-  async getAgencyById(agencyId: number) {
-    const agency = await this.prisma.agency.findUnique({
-      where: { id: agencyId },
+  async getRentalProviderById(rentalProviderId: number) {
+    const rentalProvider = await this.prisma.rentalProvider.findUnique({
+      where: { id: rentalProviderId },
     });
 
-    if (!agency) throw new NotFoundException('Agency not found');
-    return agency;
+    if (!rentalProvider)
+      throw new NotFoundException('Rental Provider not found');
+    return rentalProvider;
   }
 
   // -------------------------
   // DELETE AGENCY
   // -------------------------
 
-  async delete(agencyId: number) {
-    await this.ensureAgencyExists(agencyId);
+  async delete(rentalProviderId: number) {
+    await this.ensureAgencyExists(rentalProviderId);
   }
 
   // -------------------------
   // HELPER: CHECK AGENCY EXISTS
   // -------------------------
 
-  private async ensureAgencyExists(agencyId: number) {
-    const exists = await this.prisma.agency.findUnique({
-      where: { id: agencyId },
+  private async ensureAgencyExists(rentalProviderId: number) {
+    const exists = await this.prisma.rentalProvider.findUnique({
+      where: { id: rentalProviderId },
     });
-    if (!exists) throw new NotFoundException('Agency not found');
+    if (!exists) throw new NotFoundException('Rental Provider not found');
   }
 }

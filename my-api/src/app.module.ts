@@ -9,6 +9,9 @@ import { PrismaModule } from './prisma.module';
 import { AgencyController } from './agency/agency.controller';
 import { AgencyService } from './agency/agency.service';
 import { AgencyModule } from './agency/agency.module';
+import { RentalProviderController } from './rental-provider/rental-provider.controller';
+import { RentalProviderService } from './rental-provider/rental-provider.service';
+import { RentalProviderModule } from './rental-provider/rental-provider.module';
 
 @Module({
   imports: [
@@ -17,8 +20,9 @@ import { AgencyModule } from './agency/agency.module';
     AuthModule,
     PrismaModule,
     AgencyModule,
+    RentalProviderModule,
   ],
-  controllers: [AppController, AgencyController],
-  providers: [AppService, PrismaService, AgencyService],
+  controllers: [AppController, AgencyController, RentalProviderController],
+  providers: [AppService, PrismaService, AgencyService, RentalProviderService],
 })
 export class AppModule {}

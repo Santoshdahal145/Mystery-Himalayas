@@ -2,7 +2,7 @@ import { Type } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { CreateAddressDto } from '../../common/dto/create-address-dto';
 
-export class CreateAgencyDto {
+export class CreateRentalProviderDto {
   @IsEmail()
   email: string;
 
