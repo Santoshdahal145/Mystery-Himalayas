@@ -27,9 +27,13 @@ interface AddEditProps {
 
 const rentalProviderSchema = z.object({
   name: z.string().min(2, "Name is required"),
-  email: z.string().email("Enter a valid email"),
+  email: z.string("Enter a valid email"),
   phone: z.string().min(7, "Enter a valid phone number"),
-  logo: z.any().optional(), // File or string
+  logo: z
+    .union([z.instanceof(File), z.string()])
+    .refine((val) => val instanceof File || typeof val === "string", {
+      message: "Please upload an image.",
+    }),
 });
 
 type FormValues = z.infer<typeof rentalProviderSchema>;
@@ -83,67 +87,65 @@ export default function AddEditRentalProvider({
         />
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4 overflow-y-auto max-h-[70vh]"
-          >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Rental Provider Name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="space-y-4 mt-4 overflow-y-auto max-h-[70vh]">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Rental Provider Name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="email@example.com" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="email@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+977-98XXXXXXX" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+977-98XXXXXXX" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <Controller
-              control={form.control}
-              name="logo"
-              render={({ field, fieldState }) => (
-                <SingleImagePicker
-                  value={field.value}
-                  onChange={(file: File) => field.onChange(file)}
-                  onRemove={() => field.onChange(undefined)}
-                  label="Logo"
-                  id="logo"
-                  errorMsg={fieldState.error?.message}
-                />
-              )}
-            />
-
+              <Controller
+                control={form.control}
+                name="logo"
+                render={({ field, fieldState }) => (
+                  <SingleImagePicker
+                    value={field.value}
+                    onChange={(file: File) => field.onChange(file)}
+                    onRemove={() => field.onChange(undefined)}
+                    label="Logo"
+                    id="logo"
+                    errorMsg={fieldState.error?.message}
+                  />
+                )}
+              />
+            </div>
             <Button className="w-full mt-2" disabled={loading}>
               {loading ? "Saving..." : rentalProviderId ? "Update" : "Add"}
             </Button>

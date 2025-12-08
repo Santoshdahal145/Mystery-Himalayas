@@ -32,7 +32,7 @@ export default function PickedImage({
         className="relative w-40 border p-4 rounded-md shadow-sm mb-2 gap-2
                       border-gray-200 bg-white transition-colors duration-200"
       >
-        <div className="relative w-24 h-24">
+        <div className="relative w-32 h-32">
           <Image
             src={imgSRC}
             alt="Preview"
@@ -41,14 +41,12 @@ export default function PickedImage({
           />
 
           {/* Centered view button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute inset-0 m-auto p-1 text-white bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full w-8 h-8 flex items-center justify-center"
+          <button
+            className="absolute inset-0 m-auto p-1 text-blue-800 bg-opacity-50 hover:bg-opacity-70 rounded-full flex items-center justify-center"
             onClick={() => setImgVisible(true)}
           >
-            <Eye className="h-8 w-8" />
-          </Button>
+            <Eye strokeWidth={3} />
+          </button>
         </div>
 
         {/* Delete button */}
