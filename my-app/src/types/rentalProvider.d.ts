@@ -7,7 +7,7 @@ export type SingleRentalProvider = {
   name: string;
   email: string;
   phone: string;
-  address: AddressType;
+  address: Omit<AddressType, "id">;
   introduction: string;
 };
 

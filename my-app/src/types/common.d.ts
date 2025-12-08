@@ -5,3 +5,7 @@ export type AddressType = {
   city: string;
   street: string;
 };
+export type ApiParamsType = {
+  limit: number;
+  page: number;
+};

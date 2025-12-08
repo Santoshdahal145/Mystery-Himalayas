@@ -30,11 +30,13 @@ export default function Page() {
   return (
     <div className=" flex flex-col flex-1 p-6 space-y-2">
       {/*ADD EDIT RENTAL PROVIDER MODAL*/}
-      <AddEditRentalProvider
-        onClose={() => setAddEditModalState(INITIAL_ADD_EDIT_MODAL_STATE)}
-        visible={addEditModalState?.visible}
-        rentalProviderId={addEditModalState?.rentalProviderId}
-      />
+      {addEditModalState?.visible && (
+        <AddEditRentalProvider
+          onClose={() => setAddEditModalState(INITIAL_ADD_EDIT_MODAL_STATE)}
+          visible={addEditModalState?.visible}
+          rentalProviderId={addEditModalState?.rentalProviderId}
+        />
+      )}
       <AdminLayout.Header
         title="All Rental Providers"
         hasSearchBar
