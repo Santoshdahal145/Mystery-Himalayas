@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.setGlobalPrefix('api/v1');
   app.set('query parser', 'extended');
-  app.enableCors(corsOptions);
+  app.enableCors({ ...corsOptions, credentials: true });
   await app.listen(process.env.PORT ?? 5010);
 }
 bootstrap();

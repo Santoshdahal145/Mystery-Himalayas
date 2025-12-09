@@ -7,10 +7,13 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { RentalProviderService } from './rental-provider.service';
 import { CreateRentalProviderDto } from './dto/create-rental-provider-dto';
 import { UpdateRentalProviderDto } from './dto/update-rental-provider-dto';
+import { Public } from 'src/auth/decorators/public.decorator';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('rental-provider')
 export class RentalProviderController {
@@ -19,6 +22,7 @@ export class RentalProviderController {
   // -------------------------
   // CREATE RENTAL PROVIDER
   // -------------------------
+  @Public()
   @Post()
   async createRentalProvider(@Body() dto: CreateRentalProviderDto) {
     return this.rentalProviderService.create(dto);
@@ -37,9 +41,10 @@ export class RentalProviderController {
   // -------------------------
   // GET ALL RENTAL PROVIDERS
   // -------------------------
+  @Public()
   @Get()
-  async getAllRentalProviders() {
-    return this.rentalProviderService.getAll();
+  async getAllRentalProviders(@Query() pagination: PaginationDto) {
+    return this.rentalProviderService.getAll(pagination);
   }
 
   // -------------------------

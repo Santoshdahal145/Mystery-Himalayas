@@ -1,15 +1,13 @@
-import { Prisma } from '@prisma/client';
-
 export async function paginate<T>(
   prismaModel: {
-    findMany: (args: Prisma.UserFindManyArgs) => Promise<T[]>;
-    count: (args?: Prisma.UserCountArgs) => Promise<number>;
+    findMany: (args: any) => Promise<T[]>;
+    count: (args?: any) => Promise<number>;
   },
   options: {
     page?: number;
     limit?: number;
-    where?: Prisma.UserWhereInput;
-    orderBy?: Prisma.UserOrderByWithRelationInput;
+    where?: any;
+    orderBy?: any;
     select?: Object;
     include?: Object;
   },

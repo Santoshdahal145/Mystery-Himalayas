@@ -6,7 +6,9 @@ import {
 import { PrismaService } from '../prisma.service';
 import { CreateRentalProviderDto } from './dto/create-rental-provider-dto';
 import { UpdateRentalProviderDto } from './dto/update-rental-provider-dto';
-import { Prisma } from '@prisma/client';
+import { Prisma, RentalProvider } from '@prisma/client';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { paginate } from 'src/common/pagination/pagination.util';
 
 @Injectable()
 export class RentalProviderService {
@@ -41,7 +43,7 @@ export class RentalProviderService {
   // UPDATE AGENCY
   // -------------------------
   async update(rentalProviderId: number, dto: UpdateRentalProviderDto) {
-    const rentalProvider = await this.prisma.agency.findUnique({
+    const rentalProvider = await this.prisma.rentalProvider.findUnique({
       where: { id: rentalProviderId },
       include: { address: true },
     });
@@ -74,8 +76,15 @@ export class RentalProviderService {
   // GET ALL AGENCIES
   // -------------------------
 
-  async getAll() {
-    return await this.prisma.rentalProvider.findMany();
+  async getAll(pagination: PaginationDto) {
+    const page = Number(pagination.page) || 1;
+    const limit = Number(pagination.limit) || 10;
+
+    return paginate<RentalProvider>(this.prisma.rentalProvider, {
+      page,
+      limit,
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   // -------------------------

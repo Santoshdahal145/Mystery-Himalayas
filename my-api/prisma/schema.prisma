@@ -60,6 +60,8 @@ model Agency{
     phone String
     address Address?
     introduction String
+      createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 model RentalProvider{
     id        Int    @id @default(autoincrement())
@@ -69,4 +71,6 @@ model RentalProvider{
     phone String
     address Address?
     introduction String
+      createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
