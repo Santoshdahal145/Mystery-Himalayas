@@ -9,3 +9,8 @@ export type ApiParamsType = {
   limit: number;
   page: number;
 };
+
+export type PageLimitType = {
+  page: number;
+  limit: numbeer;
+};

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Pagination,
   PaginationContent,
@@ -10,12 +9,15 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { PageSizeSelector } from "../page-size-selector";
 
 interface PagerProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
   className?: string;
+  limit?: number;
+  onChangeLimit?: (l: number) => void;
 }
 
 export function CustomPagination({
@@ -23,8 +25,10 @@ export function CustomPagination({
   totalPages,
   onPageChange,
   className,
+  limit,
+  onChangeLimit,
 }: PagerProps) {
-  if (totalPages <= 1) return null;
+  if (totalPages < 1) return null;
 
   const delta = 2;
   const pages: (number | string)[] = [];
@@ -48,49 +52,54 @@ export function CustomPagination({
   };
 
   return (
-    <Pagination className={className}>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              if (currentPage > 1) onPageChange(currentPage - 1);
-            }}
-          />
-        </PaginationItem>
+    <div className="flex items-center w-full justify-between gap-4 fixed bottom-2">
+      {limit && onChangeLimit && (
+        <PageSizeSelector limit={limit} onLimitChange={onChangeLimit} />
+      )}
+      <Pagination className={className}>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage > 1) onPageChange(currentPage - 1);
+              }}
+            />
+          </PaginationItem>
 
-        {pages.map((p, idx) =>
-          p === "..." ? (
-            <PaginationItem key={idx}>
-              <PaginationEllipsis />
-            </PaginationItem>
-          ) : (
-            <PaginationItem key={idx}>
-              <PaginationLink
-                href="#"
-                isActive={p === currentPage}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handlePage(p);
-                }}
-              >
-                {p}
-              </PaginationLink>
-            </PaginationItem>
-          )
-        )}
+          {pages.map((p, idx) =>
+            p === "..." ? (
+              <PaginationItem key={idx}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            ) : (
+              <PaginationItem key={idx}>
+                <PaginationLink
+                  href="#"
+                  isActive={p === currentPage}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePage(p);
+                  }}
+                >
+                  {p}
+                </PaginationLink>
+              </PaginationItem>
+            )
+          )}
 
-        <PaginationItem>
-          <PaginationNext
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              if (currentPage < totalPages) onPageChange(currentPage + 1);
-            }}
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+          <PaginationItem>
+            <PaginationNext
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) onPageChange(currentPage + 1);
+              }}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
   );
 }

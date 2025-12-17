@@ -50,6 +50,7 @@ export class RentalProviderController {
   // -------------------------
   // GET RENTAL PROVIDER BY ID
   // -------------------------
+  @Public()
   @Get(':id')
   async getRentalProviderById(@Param('id', ParseIntPipe) id: number) {
     return this.rentalProviderService.getRentalProviderById(id);
@@ -58,6 +59,7 @@ export class RentalProviderController {
   // -------------------------
   // DELETE RENTAL PROVIDER
   // -------------------------
+  @Public()
   @Delete(':id')
   async deleteRentalProvider(@Param('id', ParseIntPipe) id: number) {
     await this.rentalProviderService.delete(id);

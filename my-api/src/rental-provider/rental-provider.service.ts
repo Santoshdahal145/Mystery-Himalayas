@@ -25,7 +25,7 @@ export class RentalProviderService {
       throw new ConflictException('Email already registered.');
     }
 
-    return this.prisma.rentalProvider.create({
+    const newRentalProvider = await this.prisma.rentalProvider.create({
       data: {
         email: dto.email,
         name: dto.name,
@@ -37,6 +37,11 @@ export class RentalProviderService {
         introduction: dto.introduction,
       },
     });
+    console.log(
+      '🚀 ~ RentalProviderService ~ create ~ newRentalProvider:',
+      newRentalProvider,
+    );
+    return newRentalProvider;
   }
 
   // -------------------------
@@ -76,15 +81,23 @@ export class RentalProviderService {
   // GET ALL AGENCIES
   // -------------------------
 
-  async getAll(pagination: PaginationDto) {
-    const page = Number(pagination.page) || 1;
-    const limit = Number(pagination.limit) || 10;
+  async getAll(_pagination: PaginationDto) {
+    const page = Number(_pagination.page) || 1;
+    const limit = Number(_pagination.limit) || 10;
 
-    return paginate<RentalProvider>(this.prisma.rentalProvider, {
-      page,
-      limit,
-      orderBy: { createdAt: 'desc' },
-    });
+    const { data, pagination } = await paginate<RentalProvider>(
+      this.prisma.rentalProvider,
+      {
+        page,
+        limit,
+        orderBy: { createdAt: 'desc' },
+      },
+    );
+    console.log(data, pagination);
+    return {
+      rentalProviders: data,
+      pagination,
+    };
   }
 
   // -------------------------
@@ -106,6 +119,20 @@ export class RentalProviderService {
 
   async delete(rentalProviderId: number) {
     await this.ensureAgencyExists(rentalProviderId);
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.address.deleteMany({
+        where: { agencyId: rentalProviderId },
+      });
+
+      await tx.rentalProvider.delete({
+        where: { id: rentalProviderId },
+      });
+    });
+
+    return {
+      message: 'Rental Provider deleted successfully',
+    };
   }
 
   // -------------------------

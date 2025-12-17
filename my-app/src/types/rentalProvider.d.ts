@@ -12,6 +12,6 @@ export type SingleRentalProvider = {
 };
 
 export type AllRentalProvidersWithPagination = {
-  data: SingleRentalProvider[];
+  rentalProviders: SingleRentalProvider[];
   pagination: Pagination;
 };

@@ -69,7 +69,7 @@ export const RentalProviderCard = ({
         </p>
         <p className="text-sm">
           <span className="font-semibold">Address:</span>{" "}
-          {`${address.street}, ${address.city}, ${address.state}, ${address.country}`}
+          {`${address?.street}, ${address?.city}, ${address?.state}, ${address?.country}`}
         </p>
       </CardContent>
     </Card>

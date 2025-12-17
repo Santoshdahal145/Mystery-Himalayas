@@ -60,7 +60,7 @@ export default function useRentalProviderHook(page = 1, limit = 10) {
 
           return {
             ...oldData,
-            data: [newProvider, ...oldData.data], // prepend new item
+            rentalProviders: [newProvider, ...oldData.rentalProviders], // prepend new item
             pagination: {
               ...oldData.pagination,
               total: oldData.pagination.total + 1,
@@ -88,7 +88,7 @@ export default function useRentalProviderHook(page = 1, limit = 10) {
 
           return {
             ...oldData,
-            data: oldData.data.map((p) =>
+            rentalProviders: oldData.rentalProviders.map((p) =>
               p.id === updatedItem.id ? updatedItem : p
             ),
           };
@@ -112,7 +112,7 @@ export default function useRentalProviderHook(page = 1, limit = 10) {
 
           return {
             ...oldData,
-            data: oldData.data.filter((p) => p.id !== id),
+            rentalProviders: oldData.rentalProviders.filter((p) => p.id !== id),
             pagination: {
               ...oldData.pagination,
               total: oldData.pagination.total - 1,

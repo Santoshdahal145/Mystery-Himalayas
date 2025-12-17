@@ -81,6 +81,8 @@ export default function AddEditRentalProvider({
       email: "",
       phone: "",
       logo: undefined,
+      introduction: "",
+      address: undefined,
     },
   });
 
@@ -91,11 +93,18 @@ export default function AddEditRentalProvider({
         email: editData.email,
         phone: editData.phone,
         logo: editData.logo,
+        introduction: editData?.introduction,
+        address: editData?.address,
       });
     }
   }, [editData]);
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (originalValues: FormValues) => {
+    const values: FormValues = {
+      ...originalValues,
+      logo: "https://tinypng.com/images/social/website.jpg",
+    };
+
     try {
       if (rentalProviderId) {
         await updateProvider.mutateAsync({
